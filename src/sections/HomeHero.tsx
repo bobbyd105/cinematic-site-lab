@@ -80,7 +80,7 @@ export function HomeHero() {
         >
           <video
             className="h-full w-full object-cover"
-            src="/hero.MP4"
+            src="/hero.mp4"
             autoPlay
             muted
             loop
