@@ -1,5 +1,5 @@
 import { motion, type MotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { FadeIn } from '../components/ui/FadeIn';
 
@@ -61,6 +61,8 @@ export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = Boolean(shouldReduceMotion);
+  const [videoHasError, setVideoHasError] = useState(false);
+  const heroVideoSrc = `${import.meta.env.BASE_URL}hero.mp4`;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
@@ -88,14 +90,27 @@ export function HomeHero() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_28%,rgba(245,245,240,0.34),transparent_22rem),linear-gradient(135deg,rgba(97,118,255,0.48),rgba(3,3,5,0.22)_46%,rgba(3,3,5,0.96))] sm:hidden" />
             <video
               className="hidden h-full w-full object-cover sm:block"
-              src="/hero.mp4"
+              src={heroVideoSrc}
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
               aria-label="Abstract cinematic hero footage"
+              onLoadedMetadata={() => setVideoHasError(false)}
+              onError={() => setVideoHasError(true)}
             />
+            {videoHasError && (
+              <div
+                className="absolute inset-0 hidden place-items-center bg-[radial-gradient(circle_at_48%_28%,rgba(245,245,240,0.22),transparent_22rem),linear-gradient(135deg,rgba(97,118,255,0.42),rgba(3,3,5,0.72)_52%,rgba(3,3,5,0.96))] px-6 text-center sm:grid"
+                role="status"
+                aria-live="polite"
+              >
+                <p className="max-w-sm rounded-full border border-white/14 bg-void/58 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-platinum/80 shadow-2xl shadow-black/30 backdrop-blur-xl">
+                  Cinematic preview unavailable
+                </p>
+              </div>
+            )}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,transparent_0%,rgba(3,3,5,0.14)_42%,rgba(3,3,5,0.92)_100%)]" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,3,5,0.32)_0%,transparent_34%,rgba(3,3,5,0.88)_100%)]" />
           </motion.div>
