@@ -1,5 +1,5 @@
 import { motion, type MotionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { FadeIn } from '../components/ui/FadeIn';
 
@@ -23,9 +23,15 @@ const scrollBeats = [
 
 const proofPoints = [
   'Scroll-linked hero motion',
-  'Responsive motion fallback',
+  'Mobile inline autoplay',
   'Post-hero content handoff',
 ];
+
+const mobileViewportQuery = '(max-width: 639px)';
+
+function getIsMobileViewport() {
+  return typeof window !== 'undefined' && window.matchMedia(mobileViewportQuery).matches;
+}
 
 type ScrollBeatCardProps = {
   beat: (typeof scrollBeats)[number];
@@ -62,11 +68,24 @@ export function HomeHero() {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = Boolean(shouldReduceMotion);
   const [videoHasError, setVideoHasError] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(getIsMobileViewport);
   const heroVideoSrc = `${import.meta.env.BASE_URL}hero.mp4`;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
+
+  useEffect(() => {
+    const mobileViewport = window.matchMedia(mobileViewportQuery);
+    const updateViewportMode = () => setIsMobileViewport(mobileViewport.matches);
+
+    updateViewportMode();
+    mobileViewport.addEventListener('change', updateViewportMode);
+
+    return () => mobileViewport.removeEventListener('change', updateViewportMode);
+  }, []);
+
+  const shouldScrubVideo = !reduceMotion && !isMobileViewport;
 
   const videoScale = useTransform(scrollYProgress, [0, 0.45, 1], [0.74, 1, 1.08]);
   const videoOpacity = useTransform(scrollYProgress, [0, 0.08, 0.82, 1], [0.38, 0.88, 0.92, 0.52]);
@@ -82,14 +101,13 @@ export function HomeHero() {
           <motion.div
             className="absolute inset-x-4 top-20 bottom-20 overflow-hidden border border-white/12 bg-graphite/80 shadow-[0_0_120px_rgba(90,108,255,0.22)] sm:inset-x-8 sm:top-24 sm:bottom-24 lg:inset-x-12"
             style={{
-              borderRadius: reduceMotion ? '1.5rem' : videoRadius,
-              opacity: reduceMotion ? 0.86 : videoOpacity,
-              scale: reduceMotion ? 1 : videoScale,
+              borderRadius: shouldScrubVideo ? videoRadius : '1.5rem',
+              opacity: shouldScrubVideo ? videoOpacity : 0.86,
+              scale: shouldScrubVideo ? videoScale : 1,
             }}
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_28%,rgba(245,245,240,0.34),transparent_22rem),linear-gradient(135deg,rgba(97,118,255,0.48),rgba(3,3,5,0.22)_46%,rgba(3,3,5,0.96))] sm:hidden" />
             <video
-              className="hidden h-full w-full object-cover sm:block"
+              className="block h-full w-full object-cover"
               src={heroVideoSrc}
               autoPlay
               muted
@@ -102,7 +120,7 @@ export function HomeHero() {
             />
             {videoHasError && (
               <div
-                className="absolute inset-0 hidden place-items-center bg-[radial-gradient(circle_at_48%_28%,rgba(245,245,240,0.22),transparent_22rem),linear-gradient(135deg,rgba(97,118,255,0.42),rgba(3,3,5,0.72)_52%,rgba(3,3,5,0.96))] px-6 text-center sm:grid"
+                className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_48%_28%,rgba(245,245,240,0.22),transparent_22rem),linear-gradient(135deg,rgba(97,118,255,0.42),rgba(3,3,5,0.72)_52%,rgba(3,3,5,0.96))] px-6 text-center"
                 role="status"
                 aria-live="polite"
               >
