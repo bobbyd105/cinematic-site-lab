@@ -23,6 +23,7 @@
 
 html {
   min-height: 100%;
+  overflow-x: hidden;
   background: #030305;
   scroll-behavior: auto;
 }
@@ -30,6 +31,7 @@ html {
 body {
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
   margin: 0;
   background:
     radial-gradient(circle at top, rgb(255 255 255 / 0.09), transparent 30rem),
