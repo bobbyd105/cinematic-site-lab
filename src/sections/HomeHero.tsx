@@ -5,26 +5,50 @@ import { FadeIn } from '../components/ui/FadeIn';
 
 const scrollBeats = [
   {
-    label: '01 / Atmosphere',
-    title: 'Open on a full-frame cinematic canvas.',
-    body: 'The hero video breathes with the scroll, expanding from a composed poster into an immersive product stage.',
+    label: '01 / Regional visibility',
+    title: 'See public-sector opportunity flow before the market reacts.',
+    body: 'Track agency notices, planned work, and capital programs across the regions your civil teams already serve.',
   },
   {
-    label: '02 / Direction',
-    title: 'Let motion guide the narrative rhythm.',
-    body: 'Progressive overlays, soft masks, and measured typography keep the experience premium without overwhelming the story.',
+    label: '02 / Asset corridors',
+    title: 'Map utility, drainage, and transportation work into a single operating view.',
+    body: 'InfraSignal connects procurement signals to places, routes, districts, and owners so teams can qualify earlier.',
   },
   {
-    label: '03 / Conversion',
-    title: 'Land on a confident, action-ready frame.',
-    body: 'The final beat resolves into crisp calls to action for teams ready to prototype elevated launch pages.',
+    label: '03 / Live procurement',
+    title: 'Move from scattered agency pages to a live pursuit rhythm.',
+    body: 'Surface bid activity, pre-RFP movement, and funding context in time for capture teams to act with confidence.',
   },
 ];
 
 const proofPoints = [
-  'Scroll-linked hero motion',
-  'Mobile inline autoplay',
-  'Post-hero content handoff',
+  {
+    label: 'Capital program monitoring',
+    value: '312 active programs',
+    body: 'Regional plans, CIP updates, bond-funded work, and agency board actions organized by market.',
+  },
+  {
+    label: 'Live agency activity feeds',
+    value: '18 notices today',
+    body: 'Procurement snippets from transportation, water, drainage, and municipal owners in one review queue.',
+  },
+  {
+    label: 'Surface-level intelligence layer',
+    value: '7 county corridor',
+    body: 'Fast awareness for civil firms that need early context without rebuilding their internal workflow.',
+  },
+];
+
+const regionalMetrics = [
+  { label: 'North Basin', value: '42', detail: 'open utility notices' },
+  { label: 'I-84 Corridor', value: '9', detail: 'transport packages' },
+  { label: 'Delta County', value: '$186M', detail: 'CIP visibility' },
+];
+
+const feedSnippets = [
+  'Water authority RFQ posted · 14 min',
+  'Drainage district agenda item · 31 min',
+  'DOT resurfacing package updated · 1 hr',
 ];
 
 const mobileViewportQuery = '(max-width: 639px)';
@@ -49,7 +73,7 @@ function ScrollBeatCard({ beat, index, progress, reduceMotion }: ScrollBeatCardP
 
   return (
     <motion.article
-      className="rounded-3xl border border-white/10 bg-void/46 p-4 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-5"
+      className="rounded-3xl border border-white/10 bg-void/44 p-4 shadow-2xl shadow-black/25 backdrop-blur-xl sm:p-5"
       style={{ opacity: reduceMotion ? 1 : opacity, y: reduceMotion ? 0 : y }}
     >
       <p className="text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-white/44">
@@ -93,6 +117,8 @@ export function HomeHero() {
   const headlineY = useTransform(scrollYProgress, [0, 0.35], [0, -96]);
   const headlineOpacity = useTransform(scrollYProgress, [0, 0.28, 0.42], [1, 0.92, 0]);
   const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const feedY = useTransform(scrollYProgress, [0, 1], [0, -34]);
+  const metricY = useTransform(scrollYProgress, [0, 1], [18, -10]);
 
   return (
     <>
@@ -114,7 +140,7 @@ export function HomeHero() {
               loop
               playsInline
               preload="metadata"
-              aria-label="Abstract cinematic hero footage"
+              aria-label="Abstract infrastructure intelligence background footage"
               onLoadedMetadata={() => setVideoHasError(false)}
               onError={() => setVideoHasError(true)}
             />
@@ -125,38 +151,84 @@ export function HomeHero() {
                 aria-live="polite"
               >
                 <p className="max-w-sm rounded-full border border-white/14 bg-void/58 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-platinum/80 shadow-2xl shadow-black/30 backdrop-blur-xl">
-                  Cinematic preview unavailable
+                  Infrastructure preview unavailable
                 </p>
               </div>
             )}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,transparent_0%,rgba(3,3,5,0.14)_42%,rgba(3,3,5,0.92)_100%)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,3,5,0.32)_0%,transparent_34%,rgba(3,3,5,0.88)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,transparent_0%,rgba(3,3,5,0.12)_44%,rgba(3,3,5,0.84)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,3,5,0.24)_0%,transparent_36%,rgba(3,3,5,0.76)_100%)]" />
+
+            <div className="pointer-events-none absolute inset-6 hidden overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.025)_48%,transparent_100%)] sm:block">
+              <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(255,255,255,0.09)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.09)_1px,transparent_1px)] [background-size:4.5rem_4.5rem]" />
+              <div className="absolute left-[12%] top-[34%] h-px w-[34%] rotate-[-13deg] bg-gradient-to-r from-transparent via-platinum/48 to-transparent" />
+              <div className="absolute right-[14%] top-[46%] h-px w-[28%] rotate-[18deg] bg-gradient-to-r from-transparent via-platinum/38 to-transparent" />
+              <div className="absolute left-[38%] top-[25%] h-[36%] w-px rotate-[26deg] bg-gradient-to-b from-transparent via-white/28 to-transparent" />
+              {['NORTH BASIN', 'DELTA COUNTY', 'I-84 CORRIDOR'].map((label, index) => (
+                <div
+                  key={label}
+                  className="absolute rounded-full border border-white/12 bg-void/46 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-platinum/70 shadow-2xl shadow-black/30 backdrop-blur-md"
+                  style={{
+                    left: `${18 + index * 25}%`,
+                    top: `${30 + (index % 2) * 22}%`,
+                  }}
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+
+            <motion.div
+              className="pointer-events-none absolute right-5 top-5 hidden w-64 rounded-3xl border border-white/10 bg-void/52 p-4 shadow-2xl shadow-black/30 backdrop-blur-xl md:block"
+              style={{ y: reduceMotion ? 0 : feedY }}
+            >
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.32em] text-white/42">Live procurement flow</p>
+              <div className="mt-4 space-y-3">
+                {feedSnippets.map((item) => (
+                  <div key={item} className="flex items-center gap-3 text-xs text-white/66">
+                    <span className="h-1.5 w-1.5 rounded-full bg-platinum/70 shadow-[0_0_18px_rgba(245,245,240,0.65)]" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="pointer-events-none absolute bottom-5 left-5 hidden grid-cols-3 gap-2 md:grid"
+              style={{ y: reduceMotion ? 0 : metricY }}
+            >
+              {regionalMetrics.map((metric) => (
+                <div key={metric.label} className="w-36 rounded-2xl border border-white/10 bg-void/48 p-3 backdrop-blur-xl">
+                  <p className="text-[0.58rem] font-semibold uppercase tracking-[0.24em] text-white/38">{metric.label}</p>
+                  <p className="mt-2 text-lg font-semibold tracking-[-0.04em] text-platinum">{metric.value}</p>
+                  <p className="mt-1 text-[0.68rem] text-white/50">{metric.detail}</p>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(3,3,5,0.92),transparent_24%,transparent_76%,rgba(3,3,5,0.92))]" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(3,3,5,0.54)_72%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(3,3,5,0.84),transparent_24%,transparent_76%,rgba(3,3,5,0.84))]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(3,3,5,0.44)_72%)]" />
 
           <div className="relative z-10 flex min-h-full flex-col justify-between py-4 sm:py-6">
             <motion.div
-              className="mx-auto mt-12 max-w-6xl text-center sm:mt-20 lg:mt-24"
+              className="mx-auto mt-10 max-w-6xl text-center sm:mt-20 lg:mt-24"
               style={{
                 y: reduceMotion ? 0 : headlineY,
                 opacity: reduceMotion ? 1 : headlineOpacity,
               }}
             >
               <FadeIn>
-                <p className="mb-5 text-xs font-medium uppercase tracking-[0.44em] text-white/48 sm:mb-6 sm:tracking-[0.52em]">
-                  Cinematic Site Lab
+                <p className="mb-5 text-xs font-medium uppercase tracking-[0.34em] text-white/54 sm:mb-6 sm:tracking-[0.48em]">
+                  InfraSignal / Infrastructure Procurement Intelligence
                 </p>
                 <h1
                   id="home-hero-title"
-                  className="text-balance text-4xl font-semibold tracking-[-0.06em] text-platinum sm:text-7xl lg:text-8xl"
+                  className="text-balance text-[2.65rem] font-semibold leading-[0.98] tracking-[-0.06em] text-platinum sm:text-7xl lg:text-8xl"
                 >
-                  Scroll-shaped product stories with cinematic depth.
+                  Infrastructure intelligence for firms that move early.
                 </h1>
-                <p className="mx-auto mt-6 max-w-2xl text-pretty text-sm leading-7 text-white/64 sm:mt-8 sm:text-lg sm:leading-8">
-                  A premium React, Vite, Tailwind, Framer Motion, and Lenis experiment that
-                  turns a single hero reel into a paced landing-page narrative.
+                <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-7 text-white/68 sm:mt-8 sm:text-lg sm:leading-8">
+                  InfraSignal gives civil teams a live view into public-sector opportunity flow, regional capital programs, and agency procurement movement across utility, drainage, and transportation markets.
                 </p>
               </FadeIn>
             </motion.div>
@@ -164,7 +236,7 @@ export function HomeHero() {
             <div className="mx-auto grid w-full max-w-6xl gap-5 pb-5 lg:grid-cols-[1fr_0.72fr] lg:items-end">
               <FadeIn delay={0.18} className="hidden max-w-md lg:block">
                 <div className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.32em] text-white/50 backdrop-blur-md">
-                  Scroll to direct the sequence
+                  Scroll for regional signal layers
                 </div>
               </FadeIn>
 
@@ -190,19 +262,28 @@ export function HomeHero() {
 
       <section className="relative mx-auto grid min-h-svh w-full max-w-6xl gap-10 px-5 py-24 sm:px-8 lg:grid-cols-[0.85fr_1fr] lg:items-center lg:px-12">
         <FadeIn className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.42em] text-white/42">After the hero</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.42em] text-white/42">Surface-level intelligence layer</p>
           <h2 className="mt-5 text-4xl font-semibold tracking-[-0.055em] text-platinum sm:text-6xl">
-            The story resolves into content that keeps the page moving.
+            Regional procurement awareness without another research backlog.
           </h2>
+          <p className="mt-6 text-base leading-8 text-white/58 sm:text-lg">
+            Monitor where agencies are planning, funding, and releasing infrastructure work so business development and capture teams can prioritize the right conversations.
+          </p>
         </FadeIn>
 
         <div className="grid gap-4">
           {proofPoints.map((point) => (
             <div
-              key={point}
-              className="rounded-3xl border border-white/10 bg-white/[0.045] p-5 text-lg font-medium text-white/72 backdrop-blur-xl"
+              key={point.label}
+              className="rounded-3xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
             >
-              {point}
+              <div className="flex items-start justify-between gap-4">
+                <p className="text-lg font-medium text-white/78">{point.label}</p>
+                <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-platinum/70">
+                  {point.value}
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-white/54">{point.body}</p>
             </div>
           ))}
         </div>
