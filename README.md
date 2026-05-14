@@ -34,4 +34,4 @@ src/
 
 ## Current homepage
 
-The initial homepage is a dark premium placeholder with a centered headline and smooth Framer Motion fade-in. It does not include the future scroll video hero yet.
+The homepage now includes a scroll-directed cinematic hero that pairs the bundled hero video with sticky Framer Motion transforms, narrative beat cards, Lenis smooth scrolling, and a progress indicator.
